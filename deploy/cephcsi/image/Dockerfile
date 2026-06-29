@@ -1,6 +1,8 @@
 ARG SRC_DIR="/go/src/github.com/ceph/ceph-csi/"
 ARG BASE_IMAGE
 ARG FINAL_BASE_IMAGE="quay.io/centos/centos:stream9-minimal"
+ARG TARGETPLATFORM
+ARG CSI_IMAGE_NAME
 
 FROM --platform=${TARGETPLATFORM} ${BASE_IMAGE} as updated_base
 
@@ -29,6 +31,7 @@ ARG SRC_DIR
 ARG GIT_COMMIT
 ARG GO_BUILD_VERBOSE
 ARG GOROOT=/usr/local/go
+ARG TARGETPLATFORM
 
 COPY build.env /
 
@@ -75,6 +78,7 @@ FROM --platform=${TARGETPLATFORM} ${FINAL_BASE_IMAGE}
 
 ARG SRC_DIR
 ARG CEPH_VERSION
+ARG TARGETPLATFORM
 
 LABEL maintainers="Northflank + Ceph-CSI Authors" \
     version=${CSI_IMAGE_VERSION} \
