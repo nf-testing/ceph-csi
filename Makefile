@@ -268,10 +268,8 @@ image-cephcsi: PLATFORM ?= linux/amd64,linux/arm64
 image-cephcsi: .container-cmd
 	$(CONTAINER_CMD) build $(CPUSET) --platform $(PLATFORM) --manifest $(CSI_IMAGE) -f deploy/cephcsi/image/Dockerfile . --build-arg CSI_IMAGE_NAME=$(CSI_IMAGE_NAME) --build-arg CSI_IMAGE_VERSION=$(CSI_IMAGE_VERSION) --build-arg GIT_COMMIT=$(GIT_COMMIT) --build-arg BASE_IMAGE=$(BASE_IMAGE) --build-arg CEPH_VERSION=$(CEPH_VERSION) --build-arg GO_BUILD_VERBOSE=$(GO_BUILD_VERBOSE)
 
-push-image-cephcsi: GOARCH ?= $(shell go env GOARCH 2>/dev/null)
 push-image-cephcsi: .container-cmd image-cephcsi
-	$(CONTAINER_CMD) tag $(CSI_IMAGE) $(CSI_IMAGE)-$(GOARCH)
-	$(CONTAINER_CMD) push $(CSI_IMAGE)-$(GOARCH)
+	$(CONTAINER_CMD) manifest push $(CSI_IMAGE)
 
 create-manifest: GOARCH ?= $(shell go env GOARCH 2>/dev/null)
 create-manifest: .container-cmd
