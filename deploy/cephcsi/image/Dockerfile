@@ -3,8 +3,11 @@ ARG BASE_IMAGE
 ARG FINAL_BASE_IMAGE="quay.io/centos/centos:stream9-minimal"
 ARG TARGETPLATFORM
 ARG CSI_IMAGE_NAME
+ARG CSI_IMAGE_VERSION
 
 FROM --platform=${TARGETPLATFORM} ${BASE_IMAGE} as updated_base
+
+ARG TARGETPLATFORM
 
 # TODO: remove the following cmd, when issues
 # https://github.com/ceph/ceph-container/issues/2034
@@ -79,6 +82,7 @@ FROM --platform=${TARGETPLATFORM} ${FINAL_BASE_IMAGE}
 ARG SRC_DIR
 ARG CEPH_VERSION
 ARG TARGETPLATFORM
+ARG CSI_IMAGE_VERSION
 
 LABEL maintainers="Northflank + Ceph-CSI Authors" \
     version=${CSI_IMAGE_VERSION} \
